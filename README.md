@@ -71,21 +71,20 @@ círculo, semicírculo, sector (área + arco), corona, polígono regular.
 
 ## Requisitos
 
-- JDK 21 (Temurin/Adoptium u OpenJDK). El proyecto fija `maven.compiler.release=21`.
-- Maven 3.9+.
+- JDK 25 (OpenJDK; en Ubuntu, `sudo apt install openjdk-25-jdk`). `JAVA_HOME` debe apuntar a la instalación que contiene `bin/java` y `bin/javac`.
+- Maven 3.9+ en el `PATH` del sistema.
+- El proyecto se compila con JDK 25, pero fija `maven.compiler.release=21` para generar bytecode compatible con Java 21.
 
-> Nota de este entorno: solo había JRE 25 sin `javac` ni Maven del sistema.
-> Se usaron: JDK 21 en `/tmp/opencode/jdk-21.0.12.1+1` y Maven en
-> `/tmp/opencode/apache-maven-3.9.9`. Si instalas JDK 21 + Maven del sistema,
-> los comandos de abajo funcionan sin `export`.
+> En Bash, `~/.bashrc` define `JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64` y añade su `bin` al `PATH`.
+> Abre una terminal nueva y verifica que `javac -version` funcione; si no, instala el paquete JDK completo, no solo el runtime.
 
 ## Comandos
 
 ```bash
-export JAVA_HOME=/tmp/opencode/jdk-21.0.12.1+1
-export PATH=$JAVA_HOME/bin:/tmp/opencode/apache-maven-3.9.9/bin:$PATH
-
-mvn clean verify          # compila + tests + shade + jacoco
+java -version
+javac -version
+mvn -version
+mvn clean verify          # compila con el JDK activo + tests + shade + jacoco
 mvn test                  # solo tests
 mvn -Dtest=PlaneAreaTest test
 mvn javafx:run            # UI (requiere pantalla; no funciona en headless/CI)
