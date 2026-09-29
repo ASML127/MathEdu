@@ -2,6 +2,9 @@
 
 Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 
+La [documentación completa del proyecto](documentacion/README.md) incluye guías de
+arquitectura, instalación, pruebas, módulos matemáticos y componentes internos.
+
 ## Estado
 
 - [x] Fase 0: bootstrap, arquitectura, círculo demo
