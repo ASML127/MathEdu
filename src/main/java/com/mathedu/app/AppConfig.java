@@ -80,9 +80,13 @@ import com.mathedu.domain.calculators.trig.TanCalculator;
 import com.mathedu.domain.calculators.solid.SolidMetricsCalculator;
 import com.mathedu.domain.calculators.stats.StatisticsCalculator;
 import com.mathedu.domain.calculators.linear.LinearAlgebraCalculator;
+import com.mathedu.domain.calculators.calculus.CalculusCalculator;
+import com.mathedu.domain.calculators.series.SeriesCalculator;
 import com.mathedu.domain.engine.ExpressionEngine;
 import com.mathedu.infrastructure.engine.EvalExEngine;
 import com.mathedu.infrastructure.persistence.JsonHistoryRepository;
+import com.mathedu.domain.engine.SymbolicEngine;
+import com.mathedu.infrastructure.symbolic.LazySymbolicEngine;
 
 /** Configuracion y DI manual (sin framework, YAGNI). */
 public final class AppConfig {
@@ -91,11 +95,16 @@ public final class AppConfig {
     }
 
     public static final String APP_NAME = "MathLab Edu";
-    public static final String APP_VERSION = "1.0.0-SNAPSHOT (Fase 2)";
+    public static final String APP_VERSION = "1.0.0-SNAPSHOT (Fase 5)";
 
     /** Motor de expresiones compartido (EvalEx). */
     public static ExpressionEngine buildExpressionEngine() {
         return new EvalExEngine();
+    }
+
+    /** Motor simbólico cargado de forma diferida en el primer uso. */
+    public static SymbolicEngine buildSymbolicEngine() {
+        return new LazySymbolicEngine();
     }
 
     /** Todas las formulas registradas para los modulos implementados. */
@@ -108,7 +117,28 @@ public final class AppConfig {
         registerSolids(registry);
         registerStatistics(registry);
         registerLinearAlgebra(registry);
+        registerCalculus(registry, buildSymbolicEngine(), buildExpressionEngine());
+        registerSeries(registry, buildSymbolicEngine(), buildExpressionEngine());
         return registry;
+    }
+
+    private static void registerCalculus(CalculatorRegistry registry, SymbolicEngine symbolic,
+            ExpressionEngine numeric) {
+        registry.register(new CalculusCalculator.Derivative(symbolic, numeric));
+        registry.register(new CalculusCalculator.Antiderivative(symbolic, numeric));
+        registry.register(new CalculusCalculator.DefiniteIntegral(symbolic, numeric));
+    }
+
+    private static void registerSeries(CalculatorRegistry registry, SymbolicEngine symbolic,
+            ExpressionEngine numeric) {
+        registry.register(new SeriesCalculator.ArithmeticSequence());
+        registry.register(new SeriesCalculator.GeometricSequence());
+        registry.register(new SeriesCalculator.InfiniteGeometric());
+        registry.register(new SeriesCalculator.FiniteSum(numeric));
+        registry.register(new SeriesCalculator.RatioTest());
+        registry.register(new SeriesCalculator.RootTest());
+        registry.register(new SeriesCalculator.LimitComparison());
+        registry.register(new SeriesCalculator.SimpleLimit(symbolic, numeric));
     }
 
     private static void registerLinearAlgebra(CalculatorRegistry registry) {

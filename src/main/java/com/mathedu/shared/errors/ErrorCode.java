@@ -7,6 +7,7 @@ public enum ErrorCode {
     DOMAIN_ERROR,
     OVERFLOW,
     BAD_EXPRESSION,
+    TIMEOUT,
     SINGULAR_MATRIX,
     NO_SOLUTION,
     INFINITE_SOLUTIONS,
