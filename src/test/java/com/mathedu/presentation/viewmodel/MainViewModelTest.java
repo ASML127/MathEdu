@@ -39,7 +39,7 @@ class MainViewModelTest {
     void formulasFiltradasPorCategoria() {
         MainViewModel vm = viewModel();
         // 31 (plane) + 28 (algebra) + 13 (trig) + 10 (analytic)
-        // + 10 (solids) + 8 (statistics) + 10 (linear algebra) = 110.
+        // + 10 (solids) + 8 (statistics) + 10 (linear) + 11 (phase 5) = 121.
         // Categoria predeterminada: PLANE.
         assertThat(vm.getVisibleFormulas()).hasSize(31);
         assertThat(vm.selectedFormulaProperty().get().id())
@@ -82,10 +82,10 @@ class MainViewModelTest {
     }
 
     @Test
-    void registryContieneLas110Formulas() {
+    void registryContieneLas121Formulas() {
         CalculatorRegistry registry = AppConfig.buildRegistry();
         List<String> ids = registry.all().stream().map(c -> c.formula().id()).toList();
-        assertThat(ids).hasSize(110).doesNotHaveDuplicates();
+        assertThat(ids).hasSize(121).doesNotHaveDuplicates();
     }
 
     @Test

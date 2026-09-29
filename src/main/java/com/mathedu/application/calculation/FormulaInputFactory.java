@@ -32,6 +32,8 @@ import com.mathedu.domain.calculators.analytic.AnalyticGeometryCalculator;
 import com.mathedu.domain.calculators.solid.SolidMetricsCalculator;
 import com.mathedu.domain.calculators.stats.StatisticsCalculator;
 import com.mathedu.domain.calculators.linear.LinearAlgebraCalculator;
+import com.mathedu.domain.calculators.calculus.CalculusCalculator;
+import com.mathedu.domain.calculators.series.SeriesCalculator;
 import com.mathedu.domain.calculators.geometry.CircleAreaCalculator;
 import com.mathedu.domain.calculators.geometry.CircleAreaInput;import com.mathedu.domain.calculators.plane.AnnulusAreaCalculator;
 import com.mathedu.domain.calculators.plane.AnnulusPerimeterCalculator;
@@ -406,6 +408,37 @@ public final class FormulaInputFactory {
             case LinearAlgebraCalculator.SolveGauss.FORMULA_ID ->
                     new LinearAlgebraCalculator.SystemInput(
                             text(raw, "matrix", "Matriz A"), text(raw, "constants", "Vector b"));
+            case CalculusCalculator.Derivative.FORMULA_ID ->
+                    new CalculusCalculator.FunctionInput(text(raw, "expression", "Función"),
+                            text(raw, "variable", "Variable"), num(raw, "point", "Punto"),
+                            intNum(raw, "order", "Orden"));
+            case CalculusCalculator.Antiderivative.FORMULA_ID ->
+                    new CalculusCalculator.FunctionPointInput(text(raw, "expression", "Función"),
+                            text(raw, "variable", "Variable"), num(raw, "point", "Punto"));
+            case CalculusCalculator.DefiniteIntegral.FORMULA_ID ->
+                    new CalculusCalculator.DefiniteIntegralInput(text(raw, "expression", "Función"),
+                            text(raw, "variable", "Variable"), num(raw, "lower", "Límite inferior"),
+                            num(raw, "upper", "Límite superior"));
+            case SeriesCalculator.ArithmeticSequence.FORMULA_ID ->
+                    new SeriesCalculator.ArithmeticInput(num(raw, "first", "Primer término"),
+                            num(raw, "difference", "Diferencia"), intNum(raw, "terms", "Términos"));
+            case SeriesCalculator.GeometricSequence.FORMULA_ID ->
+                    new SeriesCalculator.GeometricInput(num(raw, "first", "Primer término"),
+                            num(raw, "ratio", "Razón"), intNum(raw, "terms", "Términos"));
+            case SeriesCalculator.InfiniteGeometric.FORMULA_ID ->
+                    new SeriesCalculator.InfiniteGeometricInput(num(raw, "first", "Primer término"),
+                            num(raw, "ratio", "Razón"));
+            case SeriesCalculator.FiniteSum.FORMULA_ID ->
+                    new SeriesCalculator.FiniteSumInput(text(raw, "expression", "Término"),
+                            intNum(raw, "start", "Inicio"), intNum(raw, "end", "Fin"));
+            case SeriesCalculator.RatioTest.FORMULA_ID, SeriesCalculator.RootTest.FORMULA_ID ->
+                    new SeriesCalculator.CriterionInput(num(raw, "limit", "Límite"));
+            case SeriesCalculator.LimitComparison.FORMULA_ID ->
+                    new SeriesCalculator.ComparisonInput(num(raw, "limit", "Límite"),
+                            text(raw, "mode", "Modo de comparación"));
+            case SeriesCalculator.SimpleLimit.FORMULA_ID ->
+                    new SeriesCalculator.LimitInput(text(raw, "expression", "Función"),
+                            text(raw, "variable", "Variable"), num(raw, "point", "Punto"));
             default -> throw new CalcException(ErrorCode.UNKNOWN_FORMULA,
                     "formulaId", "Formula desconocida: " + formulaId);
         };

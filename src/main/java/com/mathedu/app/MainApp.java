@@ -48,7 +48,7 @@ public class MainApp extends Application {
         stage.setTitle(AppConfig.APP_NAME + " — " + AppConfig.APP_VERSION);
         stage.setScene(scene);
         stage.show();
-        log.info("MathLab Edu iniciado (Fase 1)");
+        log.info("MathLab Edu iniciado ({})", AppConfig.APP_VERSION);
     }
 
     public static void main(String[] args) {

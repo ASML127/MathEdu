@@ -21,10 +21,39 @@
     <slf4j.version>2.0.13</slf4j.version>
     <logback.version>1.5.8</logback.version>
     <commons-math.version>3.6.1</commons-math.version>
+    <symja.version>3.0.0</symja.version>
     <evalex.version>3.5.0</evalex.version>
     <javafx-maven-plugin.version>0.0.8</javafx-maven-plugin.version>
     <main.class>com.mathedu.app.MainApp</main.class>
+    <!--
+      El JAR sombreado se lanza con Launcher (no extiende Application) porque
+      la JDK exige JavaFX en el module-path cuando la clase principal extiende
+      javafx.application.Application. Con javafx:run / Maven el module-path lo
+      pone javafx-maven-plugin, asi que ahi se usa ${main.class}.
+    -->
+    <jar.main.class>com.mathedu.app.Launcher</jar.main.class>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!--
+        matheclipse-core arrastra slf4j-api 1.7.x y Maven lo mediationa por
+        delante de la declaracion directa. Con 1.7.x, logback-classic 1.5.8
+        (que se registra por ServiceLoader) no se detecta y el JAR sombreado
+        arranca con un logger NOP. Se fija 2.x explicitamente.
+      -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <!-- JavaFX -->
@@ -51,6 +80,11 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-math3</artifactId>
       <version>${commons-math.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.matheclipse</groupId>
+      <artifactId>matheclipse-core</artifactId>
+      <version>${symja.version}</version>
     </dependency>
 
     <!-- JSON para historial (Fase 1) -->
@@ -144,13 +178,30 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <filters>
+                <!--
+                  JavaFX y matheclipse llegan firmados: al reempaquetar, las
+                  firmas quedan invalidas y la JVM aborta con
+                  "Invalid signature file digest". Se eliminan.
+                -->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                    <exclude>module-info.class</exclude>
+                    <exclude>META-INF/versions/*/module-info.class</exclude>
+                  </excludes>
+                </filter>
+              </filters>
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>${main.class}</mainClass>
+                  <mainClass>${jar.main.class}</mainClass>
                 </transformer>
               </transformers>
-              <shadedArtifactAttached>true</shadedArtifactAttached>
-              <shadedClassifierName>shaded</shadedClassifierName>
+            <shadedArtifactAttached>true</shadedArtifactAttached>
+            <shadedClassifierName>shaded</shadedClassifierName>
             </configuration>
           </execution>
         </executions>

@@ -1,4 +1,4 @@
-# MathLab Edu — Fase 4 implementada
+# MathLab Edu — Fase 5 implementada
 
 Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 
@@ -9,13 +9,13 @@ Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 - [x] Fase 2: aritmética, álgebra, polinomios, ecuaciones y trigonometría
 - [x] Fase 3: geometría analítica, sólidos 3D y estadística
 - [x] Fase 4: vectores y matrices con Apache Commons Math
-- [x] 110 fórmulas registradas: 31 planas, 28 de álgebra, 13 trigonométricas,
-      10 analíticas, 10 de sólidos, 8 estadísticas y 10 de álgebra lineal
+- [x] Fase 5: cálculo diferencial/integral, series y sucesiones
+- [x] 121 fórmulas registradas, incluyendo 1 diferencial, 2 integrales y 8 de series
 - [x] Formulario dinámico genérico desde `FormulaDef` (añadir fórmula = 1 clase + `register()`)
 - [x] Validación centralizada: `Guards` (dominio) + `InputParser` (texto UI, coma decimal)
 - [x] Unidades: `LengthUnit` (mm/cm/m/km/in/ft) + `AngleUnit` (grados/radianes)
 - [x] Historial JSON `~/.mathlab-edu/history.json`: re-ejecutar, favoritos, quitar, limpiar
-- [x] 90 pruebas automatizadas aprobadas (`mvn verify`)
+- [x] 116 pruebas automatizadas en verde, incluidas las del motor simbólico real (Symja)
 
 ### Aritmética y álgebra
 
@@ -65,6 +65,29 @@ con punto y coma, y componentes separadas por comas o espacios (por ejemplo,
 `1,2;3,4`). Las operaciones incompatibles con las dimensiones de entrada y las
 matrices singulares muestran errores didácticos.
 
+### Cálculo diferencial e integral
+
+Derivada simbólica de orden 1–10 evaluada en un punto, integral indefinida
+evaluada con la constante fijada en cero para el fallback, e integral definida.
+Symja se carga de forma diferida, valida expresiones y limita cada operación a
+3 segundos; el arranque en frío de Symja (~2 s de carga de clases) se paga una
+sola vez y fuera de ese plazo, para que la primera operación del usuario no
+agote el tiempo. Los límites se exactizan con `Rationalize` antes de integrar o
+derivar un límite, de modo que el resultado conserva 20 dígitos significativos en
+lugar de los 6 que devolvería la aritmética de máquina. Si una integral no puede
+resolverse simbólicamente, se intenta cuadratura Gauss-Legendre y luego Simpson; el
+resultado se marca como aproximado. La antiderivada numérica se ancla como `F(0)=0`
+y también se marca aproximada.
+
+### Series y sucesiones
+
+Sucesiones aritméticas y geométricas con término n y suma parcial, serie
+geométrica infinita, sumas finitas de expresiones, criterios de razón y raíz,
+comparación por límite para términos no negativos y límites simples con Symja.
+Los criterios de razón/raíz informan “inconcluso” cuando `L=1`. Si Symja no
+resuelve un límite indeterminado, se aproxima bilateralmente con el motor
+numérico y el resultado se marca como aproximado.
+
 Figuras: cuadrado, rectángulo, triángulo (base·altura / Herón / perímetro),
 equilátero, isósceles, triángulo rectángulo, paralelogramo, rombo, trapecio, cometa,
 círculo, semicírculo, sector (área + arco), corona, polígono regular.
@@ -93,24 +116,47 @@ mvn verify                # informe cobertura: target/site/jacoco/index.html
 
 JAR: `target/mathlab-edu-1.0.0-SNAPSHOT-shaded.jar`
 
+```bash
+mvn package
+java -jar target/mathlab-edu-1.0.0-SNAPSHOT-shaded.jar
+```
+
+### Por qué «JavaFX runtime components are missing»
+
+Ese error lo lanza la propia JDK, no el proyecto: cuando la clase principal de un
+`java -jar` extiende `javafx.application.Application`, la JVM exige que JavaFX esté
+en el *module path*, y un JAR con todo en el classpath no cumple. Hay dos salidas
+y el proyecto usa las dos:
+
+- `mvn javafx:run` y la configuración `.vscode/launch.json` añaden
+  `--module-path` y `--add-modules javafx.controls,javafx.fxml`.
+- El JAR sombreado se lanza con `com.mathedu.app.Launcher`, que **no** extiende
+  `Application` y delega en `MainApp`, de modo que JavaFX se resuelve desde el
+  classpath.
+
+Además, `slf4j-api` queda fijado a 2.x en `dependencyManagement`: Symja arrastra
+1.7.x, y con esa versión logback 1.5.8 no se registra y el JAR arranca sin log.
+
 ## Estructura actual
 
 ```
 src/main/java/com/mathedu/
-   app/            MainApp, AppConfig (DI manual, 110 fórmulas registradas)
+   app/            MainApp, Launcher, AppConfig (DI manual, 121 fórmulas registradas)
   presentation/   navigation/AppCategory, viewmodel/MainViewModel, view/MainController
   application/    calculation/{CalculatorRegistry, CalculationService, FormulaInputFactory}
                   history/{HistoryService, HistoryRepository}
   domain/         shapes/{Shape, PlaneShape, plane/* (15 figuras)}
                   formulas/{FormulaDef, InputDef}
                   calculators/{Calculator, geometry/*, plane/*, algebra/*, trig/*,
-                               analytic/*, solid/*, stats/*, linear/*}
+                               analytic/*, solid/*, stats/*, linear/*, calculus/*, series/*}
                   algebra/{Fraction, Polynomial, LinearSystems}
                   trig/TriangleSolver
-                  engine/ExpressionEngine
+                  engine/{ExpressionEngine, SymbolicEngine}
                   validation/{Guards, InputParser}
                   history/HistoryEntry
   infrastructure/ persistence/JsonHistoryRepository
+                  engine/EvalExEngine
+                  symbolic/{LazySymbolicEngine, SymjaSymbolicEngine}
   shared/         result/CalculationResult, errors/, units/{LengthUnit, AngleUnit},
                   validation/ValidationResult
 src/main/resources/com/mathedu/
@@ -126,6 +172,5 @@ src/main/resources/com/mathedu/
    jamás `NaN/Infinito` crudo.
 4. `domain` no importa `javafx` ni `infrastructure`.
 
-Siguiente: **Fase 5** — cálculo diferencial e integral y series/sucesiones.
-Cálculo simbólico con Symja, integración numérica de respaldo, timeout y
-cancelación permanecen pendientes.
+Siguiente: **Fase 6** — pulido de UI, accesibilidad, pruebas de humo y empaquetado
+multiplataforma con `jlink`/`jpackage`.

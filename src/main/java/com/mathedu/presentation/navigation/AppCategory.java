@@ -7,9 +7,9 @@ public enum AppCategory {
     TRIG("Trigonometría", true),
     ANALYTIC("Geometría analítica", true),
     SOLID("Geometría 3D", true),
-    DIFF("Cálculo diferencial", false),
-    INTEGRAL("Cálculo integral", false),
-    SERIES("Series y sucesiones", false),
+    DIFF("Cálculo diferencial", true),
+    INTEGRAL("Cálculo integral", true),
+    SERIES("Series y sucesiones", true),
     STATS("Estadística y probabilidad", true),
     LINEAR("Álgebra lineal", true);
 
