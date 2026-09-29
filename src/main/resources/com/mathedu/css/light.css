@@ -1,0 +1,5 @@
+.root { -fx-font-size: 14px; -fx-background-color: #fafafa; }
+.title { -fx-font-size: 18px; -fx-font-weight: bold; }
+.section { -fx-font-size: 15px; -fx-font-weight: bold; }
+.result { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1a56db; }
+.error { -fx-text-fill: #c81e1e; }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.mathedu.presentation.view.MainController"
+            prefWidth="1150" prefHeight="680">
+  <top>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+      <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+      <Label text="MathLab Edu — Fase 1 · Geometria plana" styleClass="title"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <CheckBox fx:id="themeCheck" text="Tema oscuro"/>
+    </HBox>
+  </top>
+  <left>
+    <VBox spacing="5" prefWidth="200">
+      <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+      <Label text="Categorias" styleClass="section"/>
+      <ListView fx:id="categoryList" VBox.vgrow="ALWAYS"/>
+    </VBox>
+  </left>
+  <center>
+    <VBox spacing="8">
+      <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+      <Label text="Operacion" styleClass="section"/>
+      <ComboBox fx:id="formulaCombo" maxWidth="Infinity" visibleRowCount="12"/>
+      <Label fx:id="formulaTemplateLabel" text="Formula: —" wrapText="true"/>
+      <Separator/>
+      <Label text="Datos" styleClass="section"/>
+      <GridPane fx:id="formGrid" hgap="10" vgap="6"/>
+      <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Unidad:"/>
+        <ComboBox fx:id="lengthCombo" prefWidth="100"/>
+        <Label fx:id="angleHintLabel" text="Angulo en:"/>
+        <ComboBox fx:id="angleCombo" prefWidth="150"/>
+      </HBox>
+      <HBox spacing="10">
+        <Button fx:id="calcButton" text="Calcular" onAction="#onCalculate" defaultButton="true"/>
+        <Button text="Limpiar" onAction="#onClear"/>
+        <Button text="Copiar resultado" onAction="#onCopy"/>
+      </HBox>
+      <Separator/>
+      <Label text="Resultado" styleClass="section"/>
+      <Label fx:id="resultValueLabel" text="—" styleClass="result"/>
+      <Label fx:id="formulaLabel" text="—" wrapText="true"/>
+      <Label text="Paso a paso:"/>
+      <TextArea fx:id="stepsArea" editable="false" wrapText="true" VBox.vgrow="ALWAYS"
+                text="Introduce los datos y pulsa Calcular."/>
+      <Label fx:id="errorLabel" styleClass="error" wrapText="true"/>
+    </VBox>
+  </center>
+  <right>
+    <VBox spacing="5" prefWidth="300">
+      <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+      <Label text="Historial" styleClass="section"/>
+      <ListView fx:id="historyList" VBox.vgrow="ALWAYS"/>
+      <Label fx:id="historyCountLabel" text="Operaciones: 0"/>
+      <HBox spacing="8">
+        <Button text="Re-ejecutar" onAction="#onRerun"/>
+        <Button fx:id="favButton" text="☆ Favorita" onAction="#onToggleFavorite"/>
+      </HBox>
+      <HBox spacing="8">
+        <Button text="Quitar" onAction="#onRemoveHistory"/>
+        <Button text="Limpiar historial" onAction="#onClearHistory"/>
+      </HBox>
+    </VBox>
+  </right>
+</BorderPane>

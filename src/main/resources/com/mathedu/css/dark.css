@@ -1,0 +1,8 @@
+.root { -fx-font-size: 14px; -fx-background-color: #1e1e1e; }
+.label { -fx-text-fill: #e0e0e0; }
+.title { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffffff; }
+.section { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #ffffff; }
+.result { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #7dd3fc; }
+.error { -fx-text-fill: #fca5a5; }
+.text-field, .text-area, .combo-box, .list-view { -fx-background-color: #2d2d2d; }
+.button { -fx-background-color: #374151; -fx-text-fill: white; }
