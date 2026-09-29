@@ -79,6 +79,7 @@ import com.mathedu.domain.calculators.trig.SolveSssCalculator;
 import com.mathedu.domain.calculators.trig.TanCalculator;
 import com.mathedu.domain.calculators.solid.SolidMetricsCalculator;
 import com.mathedu.domain.calculators.stats.StatisticsCalculator;
+import com.mathedu.domain.calculators.linear.LinearAlgebraCalculator;
 import com.mathedu.domain.engine.ExpressionEngine;
 import com.mathedu.infrastructure.engine.EvalExEngine;
 import com.mathedu.infrastructure.persistence.JsonHistoryRepository;
@@ -106,7 +107,21 @@ public final class AppConfig {
         registerAnalyticGeometry(registry);
         registerSolids(registry);
         registerStatistics(registry);
+        registerLinearAlgebra(registry);
         return registry;
+    }
+
+    private static void registerLinearAlgebra(CalculatorRegistry registry) {
+        registry.register(new LinearAlgebraCalculator.VectorAdd());
+        registry.register(new LinearAlgebraCalculator.VectorSubtract());
+        registry.register(new LinearAlgebraCalculator.VectorDotProduct());
+        registry.register(new LinearAlgebraCalculator.MatrixAdd());
+        registry.register(new LinearAlgebraCalculator.MatrixSubtract());
+        registry.register(new LinearAlgebraCalculator.MatrixProduct());
+        registry.register(new LinearAlgebraCalculator.Determinant());
+        registry.register(new LinearAlgebraCalculator.Inverse());
+        registry.register(new LinearAlgebraCalculator.SolveGauss());
+        registry.register(new LinearAlgebraCalculator.Rank());
     }
 
     private static void registerStatistics(CalculatorRegistry registry) {

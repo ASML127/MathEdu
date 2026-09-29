@@ -31,6 +31,7 @@ import com.mathedu.domain.calculators.algebra.System3x3Calculator;
 import com.mathedu.domain.calculators.analytic.AnalyticGeometryCalculator;
 import com.mathedu.domain.calculators.solid.SolidMetricsCalculator;
 import com.mathedu.domain.calculators.stats.StatisticsCalculator;
+import com.mathedu.domain.calculators.linear.LinearAlgebraCalculator;
 import com.mathedu.domain.calculators.geometry.CircleAreaCalculator;
 import com.mathedu.domain.calculators.geometry.CircleAreaInput;import com.mathedu.domain.calculators.plane.AnnulusAreaCalculator;
 import com.mathedu.domain.calculators.plane.AnnulusPerimeterCalculator;
@@ -388,6 +389,23 @@ public final class FormulaInputFactory {
             case StatisticsCalculator.Poisson.FORMULA_ID ->
                     new StatisticsCalculator.Poisson.Input(num(raw, "mean", "Media λ"),
                             intNum(raw, "k", "Ocurrencias k"));
+            case LinearAlgebraCalculator.VectorAdd.FORMULA_ID,
+                    LinearAlgebraCalculator.VectorSubtract.FORMULA_ID,
+                    LinearAlgebraCalculator.VectorDotProduct.FORMULA_ID ->
+                    new LinearAlgebraCalculator.VectorInput(
+                            text(raw, "first", "Vector u"), text(raw, "second", "Vector v"));
+            case LinearAlgebraCalculator.MatrixAdd.FORMULA_ID,
+                    LinearAlgebraCalculator.MatrixSubtract.FORMULA_ID,
+                    LinearAlgebraCalculator.MatrixProduct.FORMULA_ID ->
+                    new LinearAlgebraCalculator.MatrixInput(
+                            text(raw, "first", "Matriz A"), text(raw, "second", "Matriz B"));
+            case LinearAlgebraCalculator.Determinant.FORMULA_ID,
+                    LinearAlgebraCalculator.Inverse.FORMULA_ID,
+                    LinearAlgebraCalculator.Rank.FORMULA_ID ->
+                    new LinearAlgebraCalculator.SingleMatrixInput(text(raw, "matrix", "Matriz A"));
+            case LinearAlgebraCalculator.SolveGauss.FORMULA_ID ->
+                    new LinearAlgebraCalculator.SystemInput(
+                            text(raw, "matrix", "Matriz A"), text(raw, "constants", "Vector b"));
             default -> throw new CalcException(ErrorCode.UNKNOWN_FORMULA,
                     "formulaId", "Formula desconocida: " + formulaId);
         };

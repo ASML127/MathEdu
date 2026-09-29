@@ -11,7 +11,7 @@ public enum AppCategory {
     INTEGRAL("Cálculo integral", false),
     SERIES("Series y sucesiones", false),
     STATS("Estadística y probabilidad", true),
-    LINEAR("Álgebra lineal", false);
+    LINEAR("Álgebra lineal", true);
 
     private final String displayName;
     private final boolean available;
