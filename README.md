@@ -1,4 +1,4 @@
-# MathLab Edu — Fase 3 implementada
+# MathLab Edu — Fase 4 implementada
 
 Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 
@@ -8,12 +8,14 @@ Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 - [x] Fase 1: geometría plana, unidades de longitud, formulario dinámico e historial JSON
 - [x] Fase 2: aritmética, álgebra, polinomios, ecuaciones y trigonometría
 - [x] Fase 3: geometría analítica, sólidos 3D y estadística
-- [x] 100 fórmulas registradas: 31 plana, 28 álgebra, 13 trigonometría, 10 analítica, 10 sólidos y 8 estadísticas
+- [x] Fase 4: vectores y matrices con Apache Commons Math
+- [x] 110 fórmulas registradas: 31 planas, 28 de álgebra, 13 trigonométricas,
+      10 analíticas, 10 de sólidos, 8 estadísticas y 10 de álgebra lineal
 - [x] Formulario dinámico genérico desde `FormulaDef` (añadir fórmula = 1 clase + `register()`)
 - [x] Validación centralizada: `Guards` (dominio) + `InputParser` (texto UI, coma decimal)
 - [x] Unidades: `LengthUnit` (mm/cm/m/km/in/ft) + `AngleUnit` (grados/radianes)
 - [x] Historial JSON `~/.mathlab-edu/history.json`: re-ejecutar, favoritos, quitar, limpiar
-- [x] 85 pruebas automatizadas aprobadas (`mvn verify`)
+- [x] 90 pruebas automatizadas aprobadas (`mvn verify`)
 
 ### Aritmética y álgebra
 
@@ -54,6 +56,15 @@ probabilidad clásica y condicional, y probabilidades puntuales binomial y
 Poisson. La normal devuelve la probabilidad acumulada `P(X ≤ x)`. Los cálculos
 usan Apache Commons Math.
 
+### Álgebra lineal
+
+Suma, resta y producto escalar de vectores; suma, resta y producto de matrices;
+determinante, inversa, resolución de sistemas cuadrados por eliminación de
+Gauss con pivoteo parcial y rango. Introduce las matrices por filas separadas
+con punto y coma, y componentes separadas por comas o espacios (por ejemplo,
+`1,2;3,4`). Las operaciones incompatibles con las dimensiones de entrada y las
+matrices singulares muestran errores didácticos.
+
 Figuras: cuadrado, rectángulo, triángulo (base·altura / Herón / perímetro),
 equilátero, isósceles, triángulo rectángulo, paralelogramo, rombo, trapecio, cometa,
 círculo, semicírculo, sector (área + arco), corona, polígono regular.
@@ -87,14 +98,14 @@ JAR: `target/mathlab-edu-1.0.0-SNAPSHOT-shaded.jar`
 
 ```
 src/main/java/com/mathedu/
-   app/            MainApp, AppConfig (DI manual, 100 fórmulas registradas)
+   app/            MainApp, AppConfig (DI manual, 110 fórmulas registradas)
   presentation/   navigation/AppCategory, viewmodel/MainViewModel, view/MainController
   application/    calculation/{CalculatorRegistry, CalculationService, FormulaInputFactory}
                   history/{HistoryService, HistoryRepository}
   domain/         shapes/{Shape, PlaneShape, plane/* (15 figuras)}
                   formulas/{FormulaDef, InputDef}
                   calculators/{Calculator, geometry/*, plane/*, algebra/*, trig/*,
-                               analytic/*, solid/*, stats/*}
+                               analytic/*, solid/*, stats/*, linear/*}
                   algebra/{Fraction, Polynomial, LinearSystems}
                   trig/TriangleSolver
                   engine/ExpressionEngine
@@ -116,6 +127,6 @@ src/main/resources/com/mathedu/
    jamás `NaN/Infinito` crudo.
 4. `domain` no importa `javafx` ni `infrastructure`.
 
-Siguiente: **Fase 4** — álgebra lineal (vectores, matrices, determinantes,
-inversa, eliminación de Gauss y rango). Cálculo simbólico, integración y series
-permanecen en fases posteriores.
+Siguiente: **Fase 5** — cálculo diferencial e integral y series/sucesiones.
+Cálculo simbólico con Symja, integración numérica de respaldo, timeout y
+cancelación permanecen pendientes.
