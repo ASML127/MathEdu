@@ -1,4 +1,4 @@
-# Documentación de MathLab Edu
+# Documentación de MathEdu
 
 Índice principal de la documentación del proyecto. Las páginas están en Markdown
 y sus enlaces son relativos para navegar desde VS Code, GitHub u otro visor.

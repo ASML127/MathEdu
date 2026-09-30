@@ -1,4 +1,4 @@
-# MathLab Edu 1.0.0
+# MathEdu 1.0.0
 
 Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 
@@ -18,7 +18,7 @@ arquitectura, instalación, pruebas, módulos matemáticos y componentes interno
 - [x] Formulario dinámico genérico desde `FormulaDef` (añadir fórmula = 1 clase + `register()`)
 - [x] Validación centralizada: `Guards` (dominio) + `InputParser` (texto UI, coma decimal)
 - [x] Unidades: `LengthUnit` (mm/cm/m/km/in/ft) + `AngleUnit` (grados/radianes)
-- [x] Historial JSON `~/.mathlab-edu/history.json`: re-ejecutar, favoritos, quitar, limpiar
+- [x] Historial JSON `~/.mathedu/history.json`: re-ejecutar, favoritos, quitar, limpiar
 - [x] 116 pruebas automatizadas en verde, incluidas las del motor simbólico real (Symja)
 - [x] `mvn verify` exige 80% de cobertura de líneas en `domain`
 - [x] CI construye paquetes Linux y Windows; el tag estable publica un release
@@ -127,11 +127,11 @@ mvn javafx:run            # UI (requiere pantalla; no funciona en headless/CI)
 mvn verify                # informe cobertura: target/site/jacoco/index.html
 ```
 
-JAR: `target/mathlab-edu-1.0.0-shaded.jar`
+JAR: `target/mathedu-1.0.0-shaded.jar`
 
 ```bash
 mvn package
-java -jar target/mathlab-edu-1.0.0-shaded.jar
+java -jar target/mathedu-1.0.0-shaded.jar
 ```
 
 ### Por qué «JavaFX runtime components are missing»

@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 /**
- * Guarda el historial en un JSON local: {@code ~/.mathlab-edu/history.json}.
+ * Guarda el historial en un JSON local: {@code ~/.mathedu/history.json}.
  * Sin drivers ni SQL (YAGNI en Fase 1). Escritura atomica via fichero temporal.
  */
 public class JsonHistoryRepository implements HistoryRepository {
@@ -29,7 +29,7 @@ public class JsonHistoryRepository implements HistoryRepository {
 
     /** Ruta por defecto del historial de usuario. */
     public static Path defaultPath() {
-        return Path.of(System.getProperty("user.home"), ".mathlab-edu", "history.json");
+        return Path.of(System.getProperty("user.home"), ".mathedu", "history.json");
     }
 
     @Override

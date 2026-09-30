@@ -25,7 +25,7 @@ y [Series](../../modulos/series-y-sucesiones/README.md).
 ## Persistencia
 
 `JsonHistoryRepository` implementa `HistoryRepository` con Jackson. Usa
-`~/.mathlab-edu/history.json`, devuelve un historial vacío si falta o no puede
+`~/.mathedu/history.json`, devuelve un historial vacío si falta o no puede
 leerse el archivo, y escribe en temporal antes de reemplazar el destino.
 
 ## Logging y dependencias

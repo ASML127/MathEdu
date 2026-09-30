@@ -14,7 +14,7 @@ construye y ejecuta, cómo fluye un cálculo y cómo extender y probar el sistem
 
 ## Alcance actual
 
-MathLab Edu es una aplicación de escritorio JavaFX educativa. La versión descrita
+MathEdu es una aplicación de escritorio JavaFX educativa. La versión descrita
 implementa nueve áreas con 121 fórmulas/operaciones registradas. Los metadatos de
 cada fórmula definen su categoría, campos, etiquetas y plantilla mostrada; el
 código del calculador define la matemática y sus validaciones.

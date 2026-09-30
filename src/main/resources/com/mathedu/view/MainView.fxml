@@ -10,7 +10,7 @@
   <top>
     <HBox spacing="10" alignment="CENTER_LEFT">
       <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-      <Label text="MathLab Edu — Geometría, álgebra, trigonometría y cálculo" styleClass="title"/>
+      <Label text="MathEdu — Geometría, álgebra, trigonometría y cálculo" styleClass="title"/>
       <Region HBox.hgrow="ALWAYS"/>
       <CheckBox fx:id="themeCheck" text="Tema oscuro"/>
     </HBox>

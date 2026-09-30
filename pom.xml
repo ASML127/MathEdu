@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.mathedu</groupId>
-  <artifactId>mathlab-edu</artifactId>
+  <artifactId>mathedu</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
-  <name>MathLab Edu</name>
-  <description>Calculadora y asistente de estudio matemático MathLab Edu</description>
+  <name>MathEdu</name>
+  <description>Calculadora y asistente de estudio matemático MathEdu</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

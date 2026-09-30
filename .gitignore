@@ -1,4 +1,4 @@
-# MathLab Edu — .gitignore Fase 0
+# MathEdu — .gitignore
 target/
 dependency-reduced-pom.xml
 *.class
@@ -7,5 +7,5 @@ dependency-reduced-pom.xml
 .vscode/
 *.iml
 .DS_Store
-# Historial local (Fase 1)
-.mathlab-edu/
+# Historial local
+.mathedu/

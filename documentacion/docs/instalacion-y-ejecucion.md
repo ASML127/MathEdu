@@ -46,7 +46,7 @@ headless si la prueba intenta abrir una ventana.
 
 ```bash
 mvn package
-java -jar target/mathlab-edu-1.0.0-shaded.jar
+java -jar target/mathedu-1.0.0-shaded.jar
 ```
 
 El manifiesto del JAR usa `com.mathedu.app.Launcher`, que delega en `MainApp`.
@@ -62,7 +62,7 @@ de tu sistema desde GitHub Releases. macOS queda fuera de la versión 1.0.0.
 
 ## Configuración y datos de usuario
 
-El historial se guarda en `~/.mathlab-edu/history.json`. No se configura mediante
+El historial se guarda en `~/.mathedu/history.json`. No se configura mediante
 un servidor ni una base de datos. Los registros del proceso usan SLF4J con
 Logback; la configuración está en `src/main/resources/logback.xml`.
 
