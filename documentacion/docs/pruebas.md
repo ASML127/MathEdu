@@ -15,6 +15,16 @@ mvn -Dtest=AlgebraPhase2Test test
 ```
 
 El informe HTML se genera en `target/site/jacoco/index.html`.
+`mvn verify` aplica un gate mínimo del 80% de líneas cubiertas en `domain`.
+
+Para ejecutar el smoke JavaFX en un entorno con pantalla:
+
+```bash
+mvn -Dphase6.ui=true -Dtest=MainWindowSmokeTest test
+```
+
+El workflow CI Linux lo ejecuta con Xvfb; los tests de dominio permanecen
+headless.
 
 ## Mapa de pruebas
 
@@ -31,7 +41,7 @@ El informe HTML se genera en `target/site/jacoco/index.html`.
 | Series | `SeriesPhase5Test` |
 | Geometría plana | `CircleAreaCalculatorTest`, `PlaneAreaTest`, `PlanePerimeterTest`, `PlaneValidationTest` |
 | Motor numérico y simbólico | `EvalExEngineTest`, `LazySymbolicEngineTest`, `SymjaSymbolicEngineTest` |
-| Presentación | `MainViewModelTest` |
+| Presentación | `MainViewModelTest`, `MainWindowSmokeTest` (JavaFX/TestFX, opt-in) |
 | Unidades | `LengthUnitTest` |
 
 ## Criterios de cobertura

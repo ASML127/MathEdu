@@ -67,6 +67,17 @@ public class MainController {
     public void init(MainViewModel viewModel) {
         this.viewModel = viewModel;
 
+        categoryList.setAccessibleText("Categorías de cálculo");
+        categoryList.setAccessibleHelp("Selecciona el área matemática.");
+        formulaCombo.setAccessibleText("Fórmula u operación");
+        formulaCombo.setAccessibleHelp("Selecciona la operación que deseas calcular.");
+        themeCheck.setAccessibleText("Tema oscuro");
+        themeCheck.setAccessibleHelp("Activa o desactiva el tema oscuro.");
+        calcButton.setAccessibleHelp("Calcula con los valores del formulario.");
+        resultValueLabel.setAccessibleText("Resultado del cálculo");
+        stepsArea.setAccessibleText("Procedimiento del cálculo");
+        historyList.setAccessibleText("Historial de cálculos");
+
         categoryList.setItems(viewModel.getCategories());
         categoryList.getSelectionModel().select(viewModel.selectedCategoryProperty().get());
         viewModel.selectedCategoryProperty().bind(
@@ -139,7 +150,11 @@ public class MainController {
             Label name = new Label(in.label() + ":");
             TextField field = new TextField();
             field.setPromptText(in.placeholder());
+            name.setLabelFor(field);
+            field.setAccessibleText(in.label());
+            field.setAccessibleHelp(in.placeholder());
             field.setPrefWidth(160);
+            field.setOnAction(event -> viewModel.calculate());
             field.textProperty().bindBidirectional(viewModel.inputProperty(in.key()));
             Label err = new Label();
             err.getStyleClass().add("error");

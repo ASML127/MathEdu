@@ -95,7 +95,7 @@ public final class AppConfig {
     }
 
     public static final String APP_NAME = "MathLab Edu";
-    public static final String APP_VERSION = "1.0.0-SNAPSHOT (Fase 5)";
+    public static final String APP_VERSION = "1.0.0";
 
     /** Motor de expresiones compartido (EvalEx). */
     public static ExpressionEngine buildExpressionEngine() {

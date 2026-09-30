@@ -58,6 +58,7 @@ class CalculusSymbolicIntegrationTest {
         var antiderivative = compute(CalculusCalculator.Antiderivative.FORMULA_ID,
                 Map.of("expression", "x^2", "variable", "x", "point", "3"));
         assertThat(antiderivative.value()).isCloseTo(9.0, offset(1e-12));
+        assertThat(antiderivative.warning()).contains("constante de integración C");
         assertThat(antiderivative.exact()).isTrue();
     }
 

@@ -1,4 +1,4 @@
-# MathLab Edu — Fase 5 implementada
+# MathLab Edu 1.0.0
 
 Calculadora y asistente de estudio matemático (Java 21 + JavaFX + Maven).
 
@@ -13,12 +13,15 @@ arquitectura, instalación, pruebas, módulos matemáticos y componentes interno
 - [x] Fase 3: geometría analítica, sólidos 3D y estadística
 - [x] Fase 4: vectores y matrices con Apache Commons Math
 - [x] Fase 5: cálculo diferencial/integral, series y sucesiones
+- [x] Fase 6: tema persistente, accesibilidad, smoke UI y distribución Linux/Windows
 - [x] 121 fórmulas registradas, incluyendo 1 diferencial, 2 integrales y 8 de series
 - [x] Formulario dinámico genérico desde `FormulaDef` (añadir fórmula = 1 clase + `register()`)
 - [x] Validación centralizada: `Guards` (dominio) + `InputParser` (texto UI, coma decimal)
 - [x] Unidades: `LengthUnit` (mm/cm/m/km/in/ft) + `AngleUnit` (grados/radianes)
 - [x] Historial JSON `~/.mathlab-edu/history.json`: re-ejecutar, favoritos, quitar, limpiar
 - [x] 116 pruebas automatizadas en verde, incluidas las del motor simbólico real (Symja)
+- [x] `mvn verify` exige 80% de cobertura de líneas en `domain`
+- [x] CI construye paquetes Linux y Windows; el tag estable publica un release
 
 ### Aritmética y álgebra
 
@@ -91,6 +94,13 @@ Los criterios de razón/raíz informan “inconcluso” cuando `L=1`. Si Symja n
 resuelve un límite indeterminado, se aproxima bilateralmente con el motor
 numérico y el resultado se marca como aproximado.
 
+### Distribución estable
+
+La aplicación recuerda el tema seleccionado. La versión pública es `1.0.0`, sin
+sufijos de snapshot o fase. CI crea un app-image y `.deb` para Linux y un `.msi`
+para Windows; al publicar `v1.0.0`, ambos paquetes se adjuntan al GitHub Release.
+El JAR sombreado sigue disponible para ejecución manual.
+
 Figuras: cuadrado, rectángulo, triángulo (base·altura / Herón / perímetro),
 equilátero, isósceles, triángulo rectángulo, paralelogramo, rombo, trapecio, cometa,
 círculo, semicírculo, sector (área + arco), corona, polígono regular.
@@ -117,11 +127,11 @@ mvn javafx:run            # UI (requiere pantalla; no funciona en headless/CI)
 mvn verify                # informe cobertura: target/site/jacoco/index.html
 ```
 
-JAR: `target/mathlab-edu-1.0.0-SNAPSHOT-shaded.jar`
+JAR: `target/mathlab-edu-1.0.0-shaded.jar`
 
 ```bash
 mvn package
-java -jar target/mathlab-edu-1.0.0-SNAPSHOT-shaded.jar
+java -jar target/mathlab-edu-1.0.0-shaded.jar
 ```
 
 ### Por qué «JavaFX runtime components are missing»
@@ -175,5 +185,5 @@ src/main/resources/com/mathedu/
    jamás `NaN/Infinito` crudo.
 4. `domain` no importa `javafx` ni `infrastructure`.
 
-Siguiente: **Fase 6** — pulido de UI, accesibilidad, pruebas de humo y empaquetado
-multiplataforma con `jlink`/`jpackage`.
+Versión estable: `1.0.0`. Linux y Windows se empaquetan desde CI; macOS queda
+fuera de esta entrega.

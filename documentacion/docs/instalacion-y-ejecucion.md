@@ -46,13 +46,19 @@ headless si la prueba intenta abrir una ventana.
 
 ```bash
 mvn package
-java -jar target/mathlab-edu-1.0.0-SNAPSHOT-shaded.jar
+java -jar target/mathlab-edu-1.0.0-shaded.jar
 ```
 
 El manifiesto del JAR usa `com.mathedu.app.Launcher`, que delega en `MainApp`.
 Este lanzador evita la comprobación especial de la JDK que exige JavaFX en
 `module-path` cuando la clase principal extiende `Application`. El objetivo
 `javafx:run` usa directamente `MainApp`.
+
+## Instaladores nativos
+
+Los releases estables adjuntan un app-image y paquete `.deb` para Linux, y un
+instalador `.msi` para Windows, todos con runtime incluido. Descarga el paquete
+de tu sistema desde GitHub Releases. macOS queda fuera de la versión 1.0.0.
 
 ## Configuración y datos de usuario
 

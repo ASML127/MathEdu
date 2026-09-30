@@ -6,6 +6,7 @@ import com.mathedu.application.calculation.FormulaInputFactory;
 import com.mathedu.application.history.HistoryService;
 import com.mathedu.presentation.view.MainController;
 import com.mathedu.presentation.viewmodel.MainViewModel;
+import com.mathedu.infrastructure.config.ThemePreferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,6 +34,8 @@ public class MainApp extends Application {
         javafx.scene.Parent root = loader.load();
         MainController controller = loader.getController();
         controller.init(viewModel);
+        ThemePreferences themePreferences = ThemePreferences.userDefaults();
+        viewModel.darkThemeProperty().set(themePreferences.isDarkTheme());
 
         Scene scene = new Scene(root, 1150, 680);
         scene.getStylesheets().add(
@@ -41,6 +44,7 @@ public class MainApp extends Application {
         String lightUrl = scene.getStylesheets().get(0);
 
         viewModel.darkThemeProperty().addListener((obs, oldV, isDark) -> {
+            themePreferences.setDarkTheme(isDark);
             scene.getStylesheets().clear();
             scene.getStylesheets().add(isDark ? darkUrl : lightUrl);
         });
